@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.autoSave": "onFocusChange",
+        "local-history.path": "R:\\VSCode_History\\Harbour_WebView",
+        "local-history.treeLocation": "localHistory",
+        "local-history.daysLimit": 0,
+        "local-history.maxDisplay": 5
+    }
+}

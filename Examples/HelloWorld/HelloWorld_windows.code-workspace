@@ -1,0 +1,23 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "..\\..\\Examples"
+        }
+    ],
+    "settings": {
+        "files.autoSave": "onFocusChange",
+        "harbour.compilerExecutable": "C:\\Harbour\\bin\\win\\mingw64\\harbour.exe",
+        "harbour.extraOptions": "-iC:\\Harbour\\include",
+        "harbour.extraIncludePaths":["C:\\Harbour\\include\\",
+                                     "R:\\Harbour_WebView\\hb_webview\\"],
+        "harbour.warningLevel":1,
+        "harbour.decorator":true,
+        "local-history.path": "R:\\VSCode_History\\Harbour_WebView",
+        "local-history.treeLocation": "localHistory",
+        "local-history.daysLimit": 0,
+        "local-history.maxDisplay": 5
+    }
+}

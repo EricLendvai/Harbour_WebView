@@ -9,6 +9,7 @@
 *.log
 .history
 .hbmk
+.lh
 *.NotInGit
 Thumbs.db
 *_rnd.*

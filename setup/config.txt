@@ -1,0 +1,9 @@
+Server=localhost
+BackendType=3
+Port=
+User=postgres
+PasswordStorage=2
+PasswordConfigKey=
+PasswordEnvVarName=PostgresPassword
+Database=webviewdemo
+ODBCDriver=

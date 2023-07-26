@@ -1,0 +1,175 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        // {
+        //     "label": "SwitchOS",
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "always",
+        //         "focus": true,
+        //         "panel": "shared",
+        //         "showReuseMessage": false,
+        //         "clear": true
+        //     },
+        //     "windows": {
+        //         "command": "${command:remote-containers.reopenInContainer}",
+        //         "options": {
+        //             "statusbar": {"label" : "<Open Container - Go to Ubuntu>","hide" : false}
+        //         }
+        //     },
+        //     "linux": {
+        //         "command": "${command:remote-containers.reopenLocally}",
+        //         "options": {
+        //             "statusbar": {"label" : "<Close Container - Go to Windows>","hide" : false}
+        //         }
+        //     }
+        // },
+        {
+            "label": "RunDebug",
+            "command": "${command:workbench.action.debug.start}",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {"label" : "<Compile and Debug WebViewDemo>","hide" : false}
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "CompileDebug",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "windows":{
+                "command": "${workspaceFolder}\\BuildEXE.bat",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "env": {
+                        "HB_VFP_ROOT":"C:\\Harbour_VFP",
+                        "HB_ORM_ROOT":"C:\\Harbour_ORM",
+                        "EXEName":"WebViewDemo",
+                        "BuildMode":"debug",
+                        "Execute":"no",
+                        "HB_COMPILER":"msvc64"
+                    },
+                    "statusbar": {"label" : "<Compile Debug WebViewDemo>","hide" : true}
+                }
+            },
+            "linux":{
+                "command": "sh ${workspaceFolder}/BuildEXE.sh",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "env": {
+                        "HB_VFP_ROOT":"/src/Harbour_VFP",
+                        "HB_ORM_ROOT":"/src/Harbour_ORM",
+                        "EXEName":"WebViewDemo",
+                        "BuildMode":"debug",
+                        "Execute":"no",
+                        "HB_COMPILER":"gcc"
+                    },
+                    "statusbar": {"label" : "<Compile Debug WebViewDemo>","hide" : true}
+                }
+            }
+        },
+        {
+            "label": "CompileRelease",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "windows":{
+                "command": "${workspaceFolder}\\BuildEXE.bat",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "env": {
+                        "HB_VFP_ROOT":"C:\\Harbour_VFP",
+                        "HB_ORM_ROOT":"C:\\Harbour_ORM",
+                        "EXEName":"WebViewDemo",
+                        "BuildMode":"release",
+                        "Execute":"yes",
+                        // "HB_COMPILER":"${input:CCompiler}",
+                        "HB_COMPILER":"msvc64"
+                    },
+                    "statusbar": {"label" : "<Compile and Run Release WebViewDemo>","hide" : false}
+                }
+            },
+            "linux":{
+                "command": "sh ${workspaceFolder}/BuildEXE.sh",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "env": {
+                        "HB_VFP_ROOT":"/src/Harbour_VFP",
+                        "HB_ORM_ROOT":"/src/Harbour_ORM",
+                        "EXEName":"WebViewDemo",
+                        "BuildMode":"release",
+                        "Execute":"yes",
+                        "HB_COMPILER":"gcc"
+                    },
+                    "statusbar": {"label" : "<Compile and Run Release WebViewDemo>","hide" : false}
+                }
+            }
+        },
+        {
+            "label": "DelAllPPO",
+            "type": "shell",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {"label" : "<Del All PPO>","hide" : false}
+            },
+            "presentation": {"reveal": "never"},
+            "windows":{
+                "command": "del ${workspaceFolder}\\src\\*.ppo",
+            },
+            "linux":{
+                "command": "rm ${workspaceFolder}/src/ *.ppo",
+            }
+        },
+        {
+            "label": "DelBuildCache",
+            "type": "shell",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {"label" : "<Del Build Caches>","hide" : false}
+            },
+            "presentation": {"reveal": "never"},
+            "windows":{
+                "command": "rd",
+                // The first args was for "cmd", the active (second one), is for powershell
+                // "args": ["-r","-fo","${workspaceFolder}\\build\\win64\\"]    Used if powershell is the default command shell instead of cmd
+                "args": ["${workspaceFolder}\\build\\win64\\","/s","/q"]
+            },
+            "linux":{
+                "command": "rm -rf ${workspaceFolder}/build/lin64/"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "CCompiler",
+            "type": "pickString",
+            "description": "Select C Compiler",
+            "options": ["mingw64","msvc64"],
+            "default": "mingw64"
+        }
+    ]
+}

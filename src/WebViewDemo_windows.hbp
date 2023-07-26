@@ -1,0 +1,40 @@
+#To target the creation of an exe
+-hbexe
+
+#MultiThreading
+-mt
+
+#To only recompile changed files
+-inc
+
+#To display compiler and linker info
+-trace
+
+#Output video driver for console app
+#To not display the console, comment the following line
+-gui
+
+-L${HB_VFP_ROOT}\build\win64\${HB_COMPILER}\${BuildMode}
+hb_vfp.hbc
+
+-L${HB_ORM_ROOT}\build\win64\${HB_COMPILER}\${BuildMode}
+hb_orm.hbc
+
+-o${CCompiler}\${BuildMode}\${EXEName}
+-o..\build\win64\${HB_COMPILER}\${BuildMode}\${EXEName}.exe
+
+#debugger.hbm
+
+-i.
+
+#List below the source files to compile and link
+
+WebViewDemo.prg
+WebViewControlWindow.prg
+WebViewAbout.prg
+WebViewShowAnImage.prg
+WebViewDatabaseSetup.prg
+WebViewCompanies.prg
+SupportFunctions.prg
+
+HarbourWebServer.prg

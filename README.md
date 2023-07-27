@@ -15,6 +15,8 @@ As mentioned on that repo, the WebView toolkit will:
 "Create a common HTML5 UI abstraction layer for the most widely used platforms."
 "Apps will use the user's local browser, Cocoa/WebKit on macOS, gtk-webkit2 on Linux and Edge on Windows 10."
 
+## Videos:
+Demo and code review video available at https://www.youtube.com/@EricLendvai
 
 ## Requirements:
 - Also install the following repos and compile under MSVC in release and debug mode

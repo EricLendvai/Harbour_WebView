@@ -6,6 +6,8 @@
 function CreateControlWindow()
 local l_cHtml
 local l_cInfo
+local l_nWindowNumber
+
 l_cHtml := GetWebPageHeader()
 
 l_cHtml += [<body>]
@@ -49,7 +51,7 @@ l_cHtml += [<nav class="navbar navbar-light bg-light">]
         l_cHtml += [<button onclick="CallHB('OpenNewWindowGoogle');"                                   class="btn btn-primary rounded ms-3">Open Google</button>]
         l_cHtml += [<button onclick="CallHB('CreateWindowShowAnImage');"                               class="btn btn-primary rounded ms-3">Show Image</button>]
         l_cHtml += [<button onclick="CallHB('GetWindowsInfo');"                                        class="btn btn-primary rounded ms-3">Get Windows Information</button>]
-        l_cHtml += [<button onclick="CallHB('ResetControlWindow');"                                    class="btn btn-primary rounded ms-3">Reposition Control</button>]
+        l_cHtml += [<button onclick="CallHB('MoveToTop');"                                             class="btn btn-primary rounded ms-3">Move To Top</button>]
 
     l_cHtml += [</div>]
     
@@ -83,9 +85,9 @@ l_cHtml += v_hConfig["HtmlMessageDiv"]
 l_cHtml += [<div class="m-3"><button id='jinfo'>Get Jquery Info</button></div>]
 
 l_cHtml += [</body></html>]
-v_oWindowManager:CreateWindow(WindowHandlerControl(),"Harbour WebView Demo - Control",10,100,1300,420,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
+l_nWindowNumber := v_oWindowManager:CreateWindow(WindowHandlerControl(),"Harbour WebView Demo - Control",10,100,1100,420,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
 
-return nil
+return l_nWindowNumber
 //=================================================================================================================
 class WindowHandlerControl from WindowHandlers
 exported:
@@ -141,11 +143,10 @@ case par_cAction == "GetWindowsInfo"
         l_cHTML += [<td>]+alltrim(l_aWindowInfo[3])+[</td>]
 
         l_aPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(l_aWindowInfo[1])
-
-        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[1]))+[</td>]
-        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[2]))+[</td>]
-        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[3]))+[</td>]
-        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[4]))+[</td>]
+        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]))   +[</td>]
+        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]))  +[</td>]
+        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[POSITION_AND_SIZE_INDEX_WIDTH])) +[</td>]
+        l_cHTML += [<td>]+alltrim(str(l_aPositionAndSize[POSITION_AND_SIZE_INDEX_HEIGHT]))+[</td>]
 
         l_cHTML += [</tr>]
     endfor
@@ -155,8 +156,14 @@ case par_cAction == "GetWindowsInfo"
     l_cJS := [document.getElementById("MessageFromHarbour").innerHTML = "]+strtran(l_cHTML,["],[&quot;])+[";]
     ::RunJS(l_cJS)
 
-case par_cAction == "ResetControlWindow"
-    v_oWindowManager:MoveWindow(::nWindowNumber,10,100,1300,420)
+case par_cAction == "MoveToTop"
+    l_aPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(::nWindowNumber)
+
+    v_oWindowManager:MoveWindow(::nWindowNumber,;
+                                0,;
+                                l_aPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT],;
+                                l_aPositionAndSize[POSITION_AND_SIZE_INDEX_WIDTH],;
+                                l_aPositionAndSize[POSITION_AND_SIZE_INDEX_HEIGHT])
 
 case par_cAction == "ChangeTitle"
     v_oWindowManager:ChangeTitle(::nWindowNumber,"Harbour WebView Demo - Control - Call Counter: "+par_cCallCounter)

@@ -1,4 +1,9 @@
 # Harbour WebView - Change Log
 
+## 07/26/2023 v 1.01
+* New Windows will default position based on the Control Window.   
+* Fixed to not use a 'public' schema name if using MariaDB of MySQL.   
+* Change option to reposition the Control window to simply move to the top. Makes it easier to deal with on a multi display computer.   
+
 ## 07/26/2023 v 1.00
-* Initial public release of complete new demo and binding
+* Initial public release of complete new demo and binding.   

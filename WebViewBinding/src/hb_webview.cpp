@@ -241,42 +241,11 @@ void wv_CloseWebViewWindow(const char * par_x,const char * par_y,void * par_t){
 //---------------------------------------------------------------------------------------------------------------------------------------
 void wv_CallHB( const char * par_szNumRequests, const char * par_szJson, void * par_p )
 {
-    // typedef struct {
-    // webview_t w;
-    // unsigned int count;
-    // } context_t;
-
-    // context_t *context = (context_t *)p;
-
-    // webview_t wv = *( webview_t *)p;
-    // context_t *context = (context_t *)p;
-    // char count_string[10] = {0};
-    // sprintf(count_string, "%u", 123);
-    // char result[21] = {0};
-    // strcat(result, "{\"count\": ");
-    // strcat(result, count_string);
-    // strcat(result, "}");
-
-
 #if defined(_WIN32)
     OutputDebugStringA("[Harbour] in wv_CallHB\0") ;
 #endif
     
     (*function_JSToHarbour_pointer)(par_szNumRequests,par_szJson,par_p);
-
-    // webview_return(context->w, par_szNumRequests, 0, result);
-    // webview_return(wv, par_szNumRequests, 0, "{count:'1'}\0");
-    // webview_return(wv, par_szNumRequests, 0, "{count:'1'}");
-
-    // webview_return(context->w, par_szNumRequests, 0, "(() => {try{window.increment()}catch{}window.test(2)})()");
-
-    
-
-    // webview_return(WebViewHandles[2], par_szNumRequests, 0, "{result:'123'}");
-    // webview_return(WebViewHandles[2], par_szNumRequests, 0, "abcde");                 // Did some testing to see if a return value could be returned and sent to a JS Promise .then(), but it did not seem to work.
-
-
-
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
 int64_t FindWebViewHandleNumber(webview_t par_WebViewHandle)
@@ -436,15 +405,6 @@ int64_t MoveWebViewWindow(int64_t par_iWindowNumber,int64_t par_iTop,int64_t par
 
     MoveWindow((HWND) iWindowHandle, par_iLeft,par_iTop,par_iWidth,par_iHeight,true);
 
-    // BOOL MoveWindow(
-    //   [in] HWND hWnd,
-    //   [in] int  X,
-    //   [in] int  Y,
-    //   [in] int  nWidth,
-    //   [in] int  nHeight,
-    //   [in] BOOL bRepaint
-    // );
-
     return 1;
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
@@ -467,8 +427,6 @@ int64_t AddWebViewWindowTaskBarIcon64(int64_t par_iWindowNumber,char * par_cPath
 //---------------------------------------------------------------------------------------------------------------------------------------
 int64_t JSToHarbourReturn(int64_t par_iWindowNumber,char * par_cCallCounter,char * par_cJson)
 {
-    // webview_return(webview_t w, const char *seq, int status,
-    //                             const char *result);
 
 #if defined(_WIN32)
     OutputDebugStringA("[Harbour] in JSToHarbourReturn\0") ;

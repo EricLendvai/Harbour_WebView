@@ -29,6 +29,7 @@ local l_lContinue := .t.
 local l_pWebServerThread
 local l_nInternalWebServerPort := INTERNAL_WEBSERVER_LOCALHOST_PORT  // Any unused port will work.
 local l_hLib
+local l_aControlWindowPositionAndSize
 
 private v_hConfig        := {=>}
 private v_oQueue         := Queue()  //:init()
@@ -74,9 +75,9 @@ else
 
     hb_DynCall( { "SetCallBackFunctionToJSToHarbour", l_hLib, HB_DYN_CTYPE_LONG},Get_wv_JSToHarbour_As_Pointer() )
 
-    CreateControlWindow()
+    v_hConfig["ControlWindowNumber"] := CreateControlWindow()
 
-    v_oWindowManager:ListAll()
+    // v_oWindowManager:ListAll()
 
     // Created a messaging system to deal with the lack of threading on threads using webviews
     // It seems only the main thread can create windows when WebViews are being used.
@@ -98,7 +99,14 @@ else
                 case l_cAction == "CreateWindow"
                     do case
                     case l_xCargo == "OpenGoogle"
-                        v_oWindowManager:CreateWindow(,"Google",400,500,500,600,v_hConfig["WindowTaxBarIcon"],"URL",,"https://www.google.com")
+                        l_aControlWindowPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(v_hConfig["ControlWindowNumber"])
+                        v_oWindowManager:CreateWindow(,;
+                                                      "Google",;
+                                                      l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]+30,;
+                                                      l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]+30,;
+                                                      800,;
+                                                      600,;
+                                                      v_hConfig["WindowTaxBarIcon"],"URL",,"https://www.google.com")
                     endcase 
                 case l_cAction == "Quit"
                     l_lContinue := .f.

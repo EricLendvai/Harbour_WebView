@@ -4,7 +4,15 @@
 
 //=================================================================================================================
 function CreateCompaniesWindow()
-v_oWindowManager:CreateWindow(WindowHandlerCompanies(),"Harbour WebView Demo - Companies",30,10,900,400,v_hConfig["WindowTaxBarIcon"])
+local l_aControlWindowPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(v_hConfig["ControlWindowNumber"])
+
+v_oWindowManager:CreateWindow(WindowHandlerCompanies(),;
+                              "Harbour WebView Demo - Companies",;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]+30,;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]+30,;
+                              900,;
+                              400,;
+                              v_hConfig["WindowTaxBarIcon"])
 return nil
 //=================================================================================================================
 class WindowHandlerCompanies from WindowHandlers
@@ -274,6 +282,7 @@ local l_cPasswordConfigKey
 local l_cPasswordEnvVarName
 local l_cDatabase
 local l_cPassword
+local l_cSchemaName
 local l_hSchema
 
 l_nBackendType        := val(v_oWindowManager:GetAppConfig("BackendType"))
@@ -301,18 +310,21 @@ case l_nBackendType == 1
     if empty(l_cODBCDriver)
         l_cODBCDriver := "MariaDB ODBC 3.1 Driver"
     endif
+    l_cSchemaName := nil
 
 case l_nBackendType == 2
     l_cBackendType := "MySQL"
     if empty(l_cODBCDriver)
         l_cODBCDriver := "MySQL ODBC 8.0 Unicode Driver"
     endif
+    l_cSchemaName := nil
 
 case l_nBackendType == 3
     l_cBackendType := "PostgreSQL"
     if empty(l_cODBCDriver)
         l_cODBCDriver := "PostgreSQL ODBC Driver(UNICODE)"  // Under Windows this should be the default driver name
     endif
+    l_cSchemaName := "public"
 
 otherwise
     l_cODBCDriver  := ""
@@ -324,6 +336,8 @@ if empty(l_nPort)
     l_nPort := nil
 endif
 
+MyOutputDebugString("[Harbour] Step 1")
+
 ::p_o_SQLConnection := hb_SQLConnect(l_cBackendType,;
                                     l_cODBCDriver,;
                                     l_cServer,;
@@ -331,8 +345,10 @@ endif
                                     l_cUser,;
                                     l_cPassword,;
                                     l_cDatabase,;
-                                    "public";
+                                    l_cSchemaName;
                                     )
+
+MyOutputDebugString("[Harbour] Step 2")
 
 with object ::p_o_SQLConnection
     :PostgreSQLHBORMSchemaName  := "ORM"
@@ -341,7 +357,7 @@ with object ::p_o_SQLConnection
     if :Connect() >= 0
 
         l_hSchema := ;
-{"public.company"=>{;   //Field Definition
+{"company"=>{;   //Field Definition
    {"pk"         =>{,  "I",   0,  0,"N+"};
    ,"name"       =>{, "CV", 200,  0,};
    ,"description"=>{,  "M",   0,  0,"N"};
@@ -349,6 +365,8 @@ with object ::p_o_SQLConnection
    ,;   //Index Definition
    NIL};
 }
+
+MyOutputDebugString("[Harbour] Step 3")
 
         UpdateSchema(::p_o_SQLConnection,l_hSchema)
     else

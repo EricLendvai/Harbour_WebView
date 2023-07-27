@@ -5,6 +5,7 @@
 //=================================================================================================================
 function CreateWindowAbout()
 local l_cHtml
+local l_aControlWindowPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(v_hConfig["ControlWindowNumber"])
 l_cHtml := GetWebPageHeader()
 
 l_cHtml += [<body>]
@@ -44,7 +45,10 @@ l_cHtml += [</div>]
  
 l_cHtml += [</body></html>]
 
-v_oWindowManager:CreateWindow(,"Harbour WebView Demo - About",140,140,900,500,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
+v_oWindowManager:CreateWindow(,"Harbour WebView Demo - About",;
+                               l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]+30,;
+                               l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]+30,;
+                               900,500,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
 
 return nil
 //=================================================================================================================

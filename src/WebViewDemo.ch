@@ -1,4 +1,4 @@
-#define BUILDVERSION "1.00"
+#define BUILDVERSION "1.01"
 
 #define ALLOW_DEVELOPER_TOOLS 1    // Should be 0 for not, 1 for yes. Setting to 1 will enable the browsers developers tools, like inspect.
 
@@ -22,3 +22,8 @@
 memvar v_oQueue          //FIFO Queue of actions to be performed by main thread
 memvar v_oWindowManager
 memvar v_hConfig
+
+#define POSITION_AND_SIZE_INDEX_TOP    1
+#define POSITION_AND_SIZE_INDEX_LEFT   2
+#define POSITION_AND_SIZE_INDEX_WIDTH  3
+#define POSITION_AND_SIZE_INDEX_HEIGHT 4

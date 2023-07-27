@@ -15,6 +15,7 @@ local l_nPasswordStorage
 local l_cPasswordConfigKey
 local l_cPasswordEnvVarName
 local l_cDatabase
+local l_aControlWindowPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(v_hConfig["ControlWindowNumber"])
 
 l_cHtml := GetWebPageHeader()
 
@@ -134,7 +135,13 @@ l_cHtml += [</script>]
 
 l_cHtml += [</form></body></html>]
 
-v_oWindowManager:CreateWindow(WindowHandlerDatabaseSetup(),"Harbour WebView Demo - Database Setup",40,40,850,550,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
+v_oWindowManager:CreateWindow(WindowHandlerDatabaseSetup(),;
+                              "Harbour WebView Demo - Database Setup",;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]+30,;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]+30,;
+                              850,;
+                              550,;
+                              v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
 
 return nil
 //=================================================================================================================

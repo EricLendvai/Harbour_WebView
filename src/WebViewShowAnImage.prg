@@ -5,6 +5,8 @@
 //=================================================================================================================
 function CreateWindowShowAnImage()
 local l_cHtml
+local l_aControlWindowPositionAndSize := v_oWindowManager:GetWindowPositionAndSize(v_hConfig["ControlWindowNumber"])
+
 l_cHtml := GetWebPageHeader()
 
 l_cHtml += [<body>]
@@ -29,7 +31,13 @@ l_cHtml += [<div><img src="]+v_hConfig["SitePath"]+[Logo_RainierSailBoat.png" id
  
 l_cHtml += [</body></html>]
 
-v_oWindowManager:CreateWindow(,"Harbour WebView Demo - Rainier and Sailboat",40,40,800,700,v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
+v_oWindowManager:CreateWindow(,;
+                              "Harbour WebView Demo - Rainier and Sailboat",;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_TOP]+30,;
+                              l_aControlWindowPositionAndSize[POSITION_AND_SIZE_INDEX_LEFT]+30,;
+                              800,;
+                              700,;
+                              v_hConfig["WindowTaxBarIcon"],"HTML",l_cHtml)
 
 return nil
 //=================================================================================================================

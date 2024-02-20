@@ -20,7 +20,7 @@ Demo and code review video available at https://www.youtube.com/@EricLendvai
 
 ## Requirements:
 - Also install the following repos and compile under MSVC in release and debug mode
-  - https://github.com/EricLendvai/Harbour_VFP
+  - https://github.com/EricLendvai/Harbour_EL
   - https://github.com/EricLendvai/Harbour_ORM
 - Open the WebViewBinding VSCode Workspace Harbour_WebViewBinding_windows.code-workspace and follow its compilation instructions.
 

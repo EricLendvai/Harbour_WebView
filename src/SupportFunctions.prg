@@ -52,19 +52,19 @@ FUNCTION URLEncode( cStr )
 
 
 //Functions below are from https://github.com/EricLendvai/DataWharf 
-//Copyright (c) 2023 Eric Lendvai, Federal Way, WA, USA, MIT License
+//Copyright (c) 2024 Eric Lendvai, Federal Way, WA, USA, MIT License
 //=================================================================================================================
 function PrepFieldForValue( par_FieldValue ) 
-// for now calling vfp_StrReplace, which is case insensitive ready version of hb_StrReplace
-return vfp_StrReplace(par_FieldValue,{;
-                                        [&lt;]  => [&amp;lt;] ,;
-                                        [&gt;]  => [&amp;gt;] ,;
-                                        ["]     => [&quot;]   ,;
-                                        [<]     => [&lt;]     ,;
-                                        [>]     => [&gt;]     ,;
-                                        chr(9)  => [&#9;]     ,;
-                                        chr(13) => [&#13;]    ,;
-                                        chr(10) => [];
+// for now calling el_StrReplace, which is case insensitive ready version of hb_StrReplace
+return el_StrReplace(par_FieldValue,{;
+                                      [&lt;]  => [&amp;lt;] ,;
+                                      [&gt;]  => [&amp;gt;] ,;
+                                      ["]     => [&quot;]   ,;
+                                      [<]     => [&lt;]     ,;
+                                      [>]     => [&gt;]     ,;
+                                      chr(9)  => [&#9;]     ,;
+                                      chr(13) => [&#13;]    ,;
+                                      chr(10) => [];
                                      },,1)
 //=================================================================================================================
 function UpdateSchema(par_o_SQLConnection,par_hSchema)
@@ -107,8 +107,8 @@ l_cHtml += [</div>]
 return l_cHtml
 //=================================================================================================================
 function SanitizeInput(par_text)
-local l_result := AllTrim(vfp_StrReplace(par_text,{chr(9)=>" "}))
-l_result = vfp_StrReplace(l_result,{"<"="",">"=""})
+local l_result := AllTrim(el_StrReplace(par_text,{chr(9)=>" "}))
+l_result = el_StrReplace(l_result,{"<"="",">"=""})
 return l_result
 //=================================================================================================================
 function SanitizeInputAlphaNumeric(par_cText)
@@ -129,7 +129,7 @@ return l_result
 function MultiLineTrim(par_cText)
 local l_nPos := len(par_cText)
 
-do while l_nPos > 0 .and. vfp_inlist(Substr(par_cText,l_nPos,1),chr(13),chr(10),chr(9),chr(32))
+do while l_nPos > 0 .and. el_IsInlist(Substr(par_cText,l_nPos,1),chr(13),chr(10),chr(9),chr(32))
     l_nPos -= 1
 enddo
 
@@ -143,13 +143,13 @@ if hb_IsNull(par_SourceText)
 else
     l_Text := par_SourceText
 
-    l_Text := vfp_strtran(l_Text,[&amp;],[&],-1,-1,1)
-    l_Text := vfp_strtran(l_Text,[&],[&amp;])
-    l_Text := vfp_strtran(l_Text,[<],[&lt;])
-    l_Text := vfp_strtran(l_Text,[>],[&gt;])
-    l_Text := vfp_strtran(l_Text,[  ],[ &nbsp;])
-    l_Text := vfp_strtran(l_Text,chr(10),[])
-    l_Text := vfp_strtran(l_Text,chr(13),[<br>])
+    l_Text := el_strtran(l_Text,[&amp;],[&],-1,-1,1)
+    l_Text := el_strtran(l_Text,[&],[&amp;])
+    l_Text := el_strtran(l_Text,[<],[&lt;])
+    l_Text := el_strtran(l_Text,[>],[&gt;])
+    l_Text := el_strtran(l_Text,[  ],[ &nbsp;])
+    l_Text := el_strtran(l_Text,chr(10),[])
+    l_Text := el_strtran(l_Text,chr(13),[<br>])
 endif
 
 return l_Text

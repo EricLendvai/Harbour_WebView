@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Eric Lendvai, Federal Way, WA, USA, MIT License
+//Copyright (c) 2024 Eric Lendvai, Federal Way, WA, USA, MIT License
 
 #include "WebViewDemo.ch"
 

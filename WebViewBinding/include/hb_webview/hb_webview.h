@@ -27,6 +27,7 @@ extern "C"
     DLL_API int64_t GetWebViewWindowPositionLeft(int64_t par_iWindowNumber);
     DLL_API int64_t GetWebViewWindowSizeWidth(int64_t par_iWindowNumber);
     DLL_API int64_t GetWebViewWindowSizeHeight(int64_t par_iWindowNumber);
+    DLL_API int64_t DisableWindowCloseOption(int64_t par_iWindowNumber);
     DLL_API int64_t MoveWebViewWindow(int64_t par_iWindowNumber,int64_t par_iTop,int64_t par_iLeft,int64_t par_iWidth,int64_t par_iHeight);
     DLL_API int64_t AddWebViewWindowTaskBarIcon64(int64_t par_iWindowNumber,char * par_cPath);
 

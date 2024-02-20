@@ -1,4 +1,4 @@
-//Copyright (c) 2023 Eric Lendvai, Federal Way, WA, USA, MIT License
+//Copyright (c) 2024 Eric Lendvai, Federal Way, WA, USA, MIT License
 
 // IMPORTANT NOTE:
 // Wherever the WebViewDemo.exe is generated, also place webview.dll (659 Kb) and WebView2Loader.dll (418 Kb) ? not really it seems Left

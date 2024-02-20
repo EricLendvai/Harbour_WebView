@@ -11,7 +11,7 @@
 // But was missing a license.  Since it was published on Github it had to follow its terms-of-service, which in the case of a lack of explicit license any user can fork the code and modify it.
 //  https://docs.github.com/en/site-policy/github-terms/github-terms-of-service      	5. License Grant to Other Users
 
-// Changes are Copyright (c) 2023 Eric Lendvai, Federal Way, WA, USA, MIT License
+// Changes are Copyright (c) 2024 Eric Lendvai, Federal Way, WA, USA, MIT License
 
 #include "hbclass.ch"
 #include "hbthread.ch"

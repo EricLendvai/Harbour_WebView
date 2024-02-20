@@ -9,7 +9,7 @@
 #include "hbthread.ch"
 
 #include "hb_orm.ch"
-#include "hb_vfp.ch"
+#include "hb_el.ch"
 
 #include "hbmemory.ch"
 
@@ -17,7 +17,7 @@
 #define JQUERYUI_SCRIPT_VERSION      "1_12_1_NoTooltip"
 #define JQUERY_SCRIPT_VERSION        "3_6_0"
 
-// #define CRLF chr(13)+chr(10)   //Already defined in hb_vfp.ch
+// #define CRLF chr(13)+chr(10)   //Already defined in hb_el.ch
 
 memvar v_oQueue          //FIFO Queue of actions to be performed by main thread
 memvar v_oWindowManager

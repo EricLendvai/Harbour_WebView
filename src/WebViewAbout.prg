@@ -1,4 +1,4 @@
- //Copyright (c) 2023 Eric Lendvai, Federal Way, WA, USA, MIT License
+ //Copyright (c) 2024 Eric Lendvai, Federal Way, WA, USA, MIT License
  
  #include "WebViewDemo.ch"
 
@@ -33,7 +33,7 @@ l_cHtml += [<div class="row justify-content-center">]
         l_cHtml += [<tr><td>Application Version</td>]        +[<td>]+v_hConfig["ApplicationVersion"]     +[</td></tr>]
         l_cHtml += [<tr><td>Application Build Info</td>]     +[<td>]+v_hConfig["ApplicationBuildInfo"]   +[</td></tr>]
         l_cHtml += [<tr><td>ORM Build Info</td>]             +[<td>]+hb_orm_buildinfo()                  +[</td></tr>]
-        l_cHtml += [<tr><td>VFP Build Info</td>]             +[<td>]+hb_vfp_buildinfo()                  +[</td></tr>]
+        l_cHtml += [<tr><td>EL Build Info</td>]              +[<td>]+hb_el_buildinfo()                   +[</td></tr>]
 
         l_cHtml += [<tr><td>Application Executable</td>]     +[<td>]+hb_argv(0)                          +[</td></tr>]   //hb_DirBase()
         l_cHtml += [<tr><td>Current Application Folder</td>] +[<td>]+hb_cwd()                            +[</td></tr>]

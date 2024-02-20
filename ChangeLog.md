@@ -1,5 +1,11 @@
 # Harbour WebView - Change Log
 
+## 02/19/2024 v 1.03
+* Code refactor to use Harbour_EL instead of Harbour_VFP.
+
+## 10/28/2023 v 1.02
+* New function "DisableWindowCloseOption".
+
 ## 07/26/2023 v 1.01
 * New Windows will default position based on the Control Window.   
 * Fixed to not use a 'public' schema name if using MariaDB of MySQL.   

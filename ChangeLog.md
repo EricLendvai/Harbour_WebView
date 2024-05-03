@@ -1,5 +1,8 @@
 # Harbour WebView - Change Log
 
+## 05/03/2024 v 1.04
+* Code refactor to be compatible with Harbour_ORM 4.8+
+
 ## 02/19/2024 v 1.03
 * Code refactor to use Harbour_EL instead of Harbour_VFP.
 

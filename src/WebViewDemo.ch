@@ -1,4 +1,4 @@
-#define BUILDVERSION "1.01"
+#define BUILDVERSION "1.04"
 
 #define ALLOW_DEVELOPER_TOOLS 1    // Should be 0 for not, 1 for yes. Setting to 1 will enable the browsers developers tools, like inspect.
 

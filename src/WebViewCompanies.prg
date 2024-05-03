@@ -283,7 +283,8 @@ local l_cPasswordEnvVarName
 local l_cDatabase
 local l_cPassword
 local l_cSchemaName
-local l_hSchema
+local l_hWarfConfig
+local l_cConnectionErrorMessage
 
 l_nBackendType        := val(v_oWindowManager:GetAppConfig("BackendType"))
 l_cServer             := v_oWindowManager:GetAppConfig("Server")
@@ -294,6 +295,8 @@ l_nPasswordStorage    := val(v_oWindowManager:GetAppConfig("PasswordStorage"))
 l_cPasswordConfigKey  := v_oWindowManager:GetAppConfig("PasswordConfigKey")
 l_cPasswordEnvVarName := v_oWindowManager:GetAppConfig("PasswordEnvVarName")
 l_cDatabase           := v_oWindowManager:GetAppConfig("Database")
+
+altd()
 
 do case
 case l_nPasswordStorage == 1  //In config.txt
@@ -310,14 +313,14 @@ case l_nBackendType == 1
     if empty(l_cODBCDriver)
         l_cODBCDriver := "MariaDB ODBC 3.1 Driver"
     endif
-    l_cSchemaName := nil
+    l_cSchemaName := "public" //nil
 
 case l_nBackendType == 2
     l_cBackendType := "MySQL"
     if empty(l_cODBCDriver)
         l_cODBCDriver := "MySQL ODBC 8.0 Unicode Driver"
     endif
-    l_cSchemaName := nil
+    l_cSchemaName := "public" //nil
 
 case l_nBackendType == 3
     l_cBackendType := "PostgreSQL"
@@ -338,37 +341,68 @@ endif
 
 MyOutputDebugString("[Harbour] Step 1")
 
-::p_o_SQLConnection := hb_SQLConnect(l_cBackendType,;
-                                    l_cODBCDriver,;
-                                    l_cServer,;
-                                    l_nPort,;
-                                    l_cUser,;
-                                    l_cPassword,;
-                                    l_cDatabase,;
-                                    l_cSchemaName;
-                                    )
 
-MyOutputDebugString("[Harbour] Step 2")
+l_hWarfConfig := {"HarbourORMVersion"=>4.8,;
+                  "DataWharfVersion"=>4.8,;
+                  "Backend"=>"PostgreSQL",;
+                  "GenerationTime"=>"2024-04-28T08:09:08.655Z",;
+                  "GenerationSignature"=>"a03ba831-6839-4395-acab-b63ed67915a4",;
+                  "Namespaces"=>{;
+                      "public"},;
+                  "Tables"=>;
+                      {"public.company"=>{"Fields"=>;
+                          {"pk"         =>{"UsedAs"=>"Primary","Type"=>"I","AutoIncrement"=>.t.};
+                          ,"name"       =>{"Type"=>"CV","Length"=>200};
+                          ,"description"=>{"Type"=>"M","Nullable"=>.t.};
+                          ,"website"    =>{"Type"=>"CV","Length"=>200,"Nullable"=>.t.}};
+                                          };
+                      },;
+                  "GenerationSource"=>"DataWharf"}
 
+
+
+// ::p_o_SQLConnection := hb_SQLConnect(l_cBackendType,;
+//                                     l_cODBCDriver,;
+//                                     l_cServer,;
+//                                     l_nPort,;
+//                                     l_cUser,;
+//                                     l_cPassword,;
+//                                     l_cDatabase,;
+//                                     l_cSchemaName;
+//                                     )
+
+
+
+::p_o_SQLConnection := hb_SQLConnect()
 with object ::p_o_SQLConnection
-    :PostgreSQLHBORMSchemaName  := "ORM"
+    :SetBackendType(l_cBackendType)
+    :SetDriver(l_cODBCDriver)
+    :SetServer(l_cServer)
+    :SetPort(l_nPort)
+    :SetUser(l_cUser)
+    :SetPassword(l_cPassword)
+    :SetDatabase(l_cDatabase)
+    :SetCurrentNamespaceName(l_cSchemaName)
+
+    :LoadWharfConfiguration(l_hWarfConfig)
+    
+    :SetForeignKeyNullAndZeroParity(.t.)
+
+    :SetHarbourORMNamespace("ORM")
     :PostgreSQLIdentifierCasing := HB_ORM_POSTGRESQL_CASE_SENSITIVE
-    :SetPrimaryKeyFieldName("pk")
+    
+    MyOutputDebugString("[Harbour] Step 2")
+
+    // with object ::p_o_SQLConnection
+    //     :PostgreSQLHBORMSchemaName  := "ORM"
+    //     :PostgreSQLIdentifierCasing := HB_ORM_POSTGRESQL_CASE_SENSITIVE
+    //     if :Connect() >= 0
+
+
     if :Connect() >= 0
+        MyOutputDebugString("[Harbour] Step 3")
 
-        l_hSchema := ;
-{"company"=>{;   //Field Definition
-   {"pk"         =>{,  "I",   0,  0,"N+"};
-   ,"name"       =>{, "CV", 200,  0,};
-   ,"description"=>{,  "M",   0,  0,"N"};
-   ,"website"    =>{, "CV", 200,  0,"N"}};
-   ,;   //Index Definition
-   NIL};
-}
-
-MyOutputDebugString("[Harbour] Step 3")
-
-        UpdateSchema(::p_o_SQLConnection,l_hSchema)
+        UpdateSchema(::p_o_SQLConnection)
     else
         MyOutputDebugString("[Harbour] Failed to Connect to database - "+:GetErrorMessage())
         ::p_o_SQLConnection := NIL

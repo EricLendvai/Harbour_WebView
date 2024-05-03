@@ -67,16 +67,24 @@ return el_StrReplace(par_FieldValue,{;
                                       chr(10) => [];
                                      },,1)
 //=================================================================================================================
-function UpdateSchema(par_o_SQLConnection,par_hSchema)
-local l_LastError := ""
+function UpdateSchema(par_o_SQLConnection)
+local l_cLastError := ""
 local l_nMigrateSchemaResult := 0
+local l_lCyanAuditAware
+local l_cUpdateScript := ""
 
-if el_AUnpack(par_o_SQLConnection:MigrateSchema(par_hSchema),@l_nMigrateSchemaResult,,@l_LastError) > 0
-    if l_nMigrateSchemaResult == 1
+MyOutputDebugString("[Harbour] In UpdateSchema")
+
+if el_AUnpack(par_o_SQLConnection:MigrateSchema(par_o_SQLConnection:p_hWharfConfig),@l_nMigrateSchemaResult,@l_cUpdateScript,@l_cLastError) > 0
+    if l_nMigrateSchemaResult >= 0
+        par_o_SQLConnection:RecordCurrentAppliedWharfConfig()
     endif
 else
-    if !empty(l_LastError)
-        MyOutputDebugString("[Harbour] Database Migration Failed - "+l_LastError)
+    if empty(l_cLastError)
+        //No migration was needed but still ensure the WharfConfig stamp is up to date.
+        par_o_SQLConnection:RecordCurrentAppliedWharfConfig()
+    else
+        MyOutputDebugString("[Harbour] Database Migration Failed - "+l_cLastError)
     endif
 endif
 
